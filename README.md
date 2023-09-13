@@ -12,6 +12,19 @@ run the command line tool by pointing to the configs via the environment or on t
 
 You can specify an output file for the JSON position report via the command line. Use verbose mode (`-v`) to see more detail on the process. 
 
+```commandline
+options:
+  -h, --help            show this help message and exit
+  -c CHAIN_CONFIG, --chain-config CHAIN_CONFIG
+                        Path to a chain resource config file. This can also be specified via the environment
+  -p POSITION_CONFIG, --position-config POSITION_CONFIG
+                        Path to a position config file. This can also be specified via the environment
+  -o OUT_FILE, --out-file OUT_FILE
+                        If specified, reports will be output to path specified rather than the default STDOUT
+  -v, --verbose
+```
+
+
 TODO:
 
  - [x] More Logging

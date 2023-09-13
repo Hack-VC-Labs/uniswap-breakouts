@@ -161,3 +161,4 @@ cython_debug/
 
 # Project specific - location to put sensitive configs
 params/*
+/abi_cache.json

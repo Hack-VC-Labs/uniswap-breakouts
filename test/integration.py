@@ -7,11 +7,12 @@ import sys
 from typing import Dict, Optional, List
 import unittest
 
-MAIN_MODULE = Path(__file__).parent / "../src/uniswap_breakouts/main.py"
+#MAIN_MODULE = Path(__file__).parent / "-m "
+PACKAGE_RUN = ["-m", "uniswap_breakouts"]
 
 
 def run_and_return_std_out(args: Optional[List[str]] = None, env_vars: Optional[Dict[str, str]] = None):
-    cmd = [sys.executable, MAIN_MODULE]
+    cmd = [sys.executable] + PACKAGE_RUN
     if args is not None:
         cmd.extend(args)
     env = os.environ.copy()
