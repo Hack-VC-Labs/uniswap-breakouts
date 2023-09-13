@@ -1,9 +1,10 @@
 from dataclasses import dataclass
-from dataclasses_json import dataclass_json
 from decimal import Decimal
 from typing import Any, List, Optional
 
+from dataclasses_json import DataClassJsonMixin
 from marshmallow import Schema, fields, post_load
+
 
 @dataclass(frozen=True)
 class ChainResources:
@@ -13,9 +14,8 @@ class ChainResources:
     rpc_url: str
 
 
-@dataclass_json
 @dataclass(frozen=True)
-class V2PositionSpec:
+class V2PositionSpec(DataClassJsonMixin):
     chain: str
     pool_address: str
     wallet_address: Optional[str]
@@ -27,7 +27,9 @@ class V2PositionSpec:
             raise ValueError("V2 position specifier must include either a wallet address or lp balance")
 
         if self.wallet_address is not None and self.lp_balance is not None:
-            raise ValueError("Only one of wallet address or lp balance may be specified in a V2 position spec")
+            raise ValueError(
+                "Only one of wallet address or lp balance may be specified in a V2 position spec"
+            )
 
 
 class V2SpecSchema(Schema):
@@ -38,13 +40,12 @@ class V2SpecSchema(Schema):
     block_no = fields.Integer(required=False, missing=None)
 
     @post_load
-    def post_load(self, data: dict, **kwargs: Any) -> V2PositionSpec:
+    def post_load(self, data: dict, **kwargs: Any) -> V2PositionSpec:  # pylint: disable=unused-argument
         return V2PositionSpec(**data)
 
 
-@dataclass_json
 @dataclass(frozen=True)
-class V3PositionSpec:
+class V3PositionSpec(DataClassJsonMixin):
     chain: str
     pool_address: str
     nft_address: str
@@ -60,7 +61,7 @@ class V3SpecSchema(Schema):
     block_no = fields.Integer(required=False, missing=None)
 
     @post_load
-    def post_load(self, data: dict, **kwargs: Any) -> V3PositionSpec:
+    def post_load(self, data: dict, **kwargs: Any) -> V3PositionSpec:  # pylint: disable=unused-argument
         return V3PositionSpec(**data)
 
 
@@ -75,5 +76,5 @@ class PositionSpecsSchema(Schema):
     v3_positions = fields.Nested(V3SpecSchema, many=True, missing=[])
 
     @post_load
-    def post_load(self, data: dict, **kwargs: Any) -> PositionSpecs:
+    def post_load(self, data: dict, **kwargs: Any) -> PositionSpecs:  # pylint: disable=unused-argument
         return PositionSpecs(**data)

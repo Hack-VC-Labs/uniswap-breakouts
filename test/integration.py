@@ -63,3 +63,5 @@ class WethUsdcPoolsCase(unittest.TestCase):
             actual_output = json.load(out_file)
 
         self.assertEqual(actual_output, self.expected_output)
+
+        # TODO: caching test
