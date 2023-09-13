@@ -11,4 +11,4 @@ TODO:
    - [ ] Unit
  - [ ] Examples
  - [ ] Write out usage here
- - [ ] Linting and Clean Up
+ - [x] Linting and Clean Up
