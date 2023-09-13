@@ -7,7 +7,10 @@ from uniswap_breakouts.report.report_runner import create_position_reports
 from uniswap_breakouts.utils.env_utils import get_env_variable
 
 
-def main(verbose: int, chain_config: Optional[str] = None, position_config: Optional[str] = None) -> None:
+def main(verbose: int,
+         chain_config: Optional[str] = None,
+         position_config: Optional[str] = None,
+         out_file: Optional[str] = None) -> None:
     log_verbosity = [logging.ERROR, logging.INFO, logging.DEBUG]
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=log_verbosity[verbose])
     logger = logging.getLogger()
@@ -28,7 +31,7 @@ def main(verbose: int, chain_config: Optional[str] = None, position_config: Opti
 
     set_chain_resource_config_path(chain_config)
     set_position_spec_config_path(position_config)
-    create_position_reports()
+    create_position_reports(out_file)
 
 
 if __name__ == '__main__':
@@ -41,6 +44,8 @@ if __name__ == '__main__':
                         help="Path to a chain resource config file. This can also be specified via the environment")
     parser.add_argument('-p', '--position-config', required=False,
                         help='Path to a position config file. This can also be specified via the environment')
+    parser.add_argument('-o', '--out-file', required=False,
+                        help='If specified, reports will be output to path specified rather than the default STDOUT')
     parser.add_argument('-v', '--verbose', action='count', default=0)
 
     args = parser.parse_args()

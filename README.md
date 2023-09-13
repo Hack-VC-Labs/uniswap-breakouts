@@ -4,7 +4,7 @@ Library and utility to help break out underlying token amounts from uniswap posi
 TODO:
 
  - [x] More Logging
- - [ ] Option to export reports somewhere other than STDOUT
+ - [x] Option to export reports somewhere other than STDOUT
  - [ ] Prettier reports
  - [ ] Test
  - [ ] Examples

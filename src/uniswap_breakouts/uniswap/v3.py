@@ -81,7 +81,6 @@ def get_underlying_balances(chain: str, pool_address: str, nft_address: str, nft
                                                    fn_args=[nft_id],
                                                    block_no=block_no)
 
-    # fee = positions_info_result[4]
     tick_lower = positions_info_result[5]
     lower_tick_price = tick_to_price(tick_lower)
     tick_upper = positions_info_result[6]
