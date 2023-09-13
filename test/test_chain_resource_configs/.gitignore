@@ -1,0 +1,3 @@
+# include this directory in versioning but ignore all files in it
+*
+!.gitignore

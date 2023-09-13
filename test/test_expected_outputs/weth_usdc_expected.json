@@ -1,0 +1,65 @@
+{
+  "V2 Positions": [
+    {
+      "position_spec": {
+        "chain": "ethereum",
+        "pool_address": "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+        "wallet_address": "0xd7a51ff8357C210D11499E251B2849D1BB35Cbc2",
+        "lp_balance": null,
+        "block_no": 17485966
+      },
+      "position_breakdown": {
+        "chain": "ethereum",
+        "block": 17485966,
+        "num_lp_tokens": "0.023535371873593926",
+        "token0": {
+          "index": 0,
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "symbol": "USDC",
+          "decimals": 6
+        },
+        "num_token0_underlying": "2081542.573374858842192445602",
+        "token1": {
+          "index": 1,
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "symbol": "WETH",
+          "decimals": 18
+        },
+        "num_token1_underlying": "1266.398281821527838034788930"
+      }
+    }
+  ],
+  "V3 Positions": [
+    {
+      "position_spec": {
+        "chain": "ethereum",
+        "pool_address": "0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
+        "nft_address": "0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+        "nft_id": 525319,
+        "block_no": 17485966
+      },
+      "position_breakdown": {
+        "chain": "ethereum",
+        "block": 17485966,
+        "token_id": 525319,
+        "current_ratio": "0.0006076500303414135171761512701",
+        "lower_tick": "0.0005213835018309208171508175096",
+        "upper_tick": "0.0007080187383649397251128772395",
+        "token0": {
+          "index": 0,
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "symbol": "USDC",
+          "decimals": 6
+        },
+        "num_token0_underlying": "9629.052285048853265825519564",
+        "token1": {
+          "index": 1,
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "symbol": "WETH",
+          "decimals": 18
+        },
+        "num_token1_underlying": "5.028677685533798722836940252"
+      }
+    }
+  ]
+}

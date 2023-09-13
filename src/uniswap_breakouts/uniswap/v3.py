@@ -5,6 +5,7 @@ from typing import Optional, Tuple
 
 from dataclasses_json import dataclass_json
 
+from uniswap_breakouts.constants.abis import V3_POOL_CONTRACT_ABI
 from uniswap_breakouts.uniswap.uniswap_utils import PoolToken, get_pool_token_info
 from uniswap_breakouts.utils.web3_utils import contract_call_at_block
 
@@ -57,8 +58,8 @@ def get_underlying_balances(chain: str, pool_address: str, nft_address: str, nft
         return pool_string(chain, pool_address, nft_id, block_no)
 
     logger.debug(f"requesting underlying LP balances for V3 position f{position_string()}")
-    token0 = get_pool_token_info(chain, pool_address, 0)
-    token1 = get_pool_token_info(chain, pool_address, 1)
+    token0 = get_pool_token_info(chain, pool_address, 0, V3_POOL_CONTRACT_ABI)
+    token1 = get_pool_token_info(chain, pool_address, 1, V3_POOL_CONTRACT_ABI)
     decimal_adjustment = Decimal(10 ** (token0.decimals - token1.decimals))
 
     logger.debug(f"getting pool price for {position_string()}")
@@ -67,7 +68,8 @@ def get_underlying_balances(chain: str, pool_address: str, nft_address: str, nft
                                               implementation_address=pool_address,
                                               fn_name='slot0',
                                               fn_args=[],
-                                              block_no=block_no)
+                                              block_no=block_no,
+                                              abi=V3_POOL_CONTRACT_ABI)
 
     sqrt_price_x96 = pool_info_result[0]
     price = q64_96_to_decimal(sqrt_price_x96) ** Decimal(2)

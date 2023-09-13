@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import logging
+from typing import Optional
 
 from dataclasses_json import dataclass_json
 
@@ -18,7 +19,7 @@ class PoolToken:
     decimals: int
 
 
-def get_pool_token_info(chain: str, pool_address: str, token_index: int) -> PoolToken:
+def get_pool_token_info(chain: str, pool_address: str, token_index: int, pool_abi: Optional[dict] = None) -> PoolToken:
     assert token_index == 0 or token_index == 1
     logger.debug(f"getting token info for pool {chain} - {pool_address} with token index {token_index}")
 
@@ -28,7 +29,8 @@ def get_pool_token_info(chain: str, pool_address: str, token_index: int) -> Pool
                                            implementation_address=pool_address,
                                            fn_name=fn_name,
                                            fn_args=[],
-                                           chain=chain)
+                                           chain=chain,
+                                           abi=pool_abi)
 
     token_decimals = contract_call_at_block(interface_address=token_address,
                                             implementation_address=token_address,

@@ -7,6 +7,8 @@ TODO:
  - [x] Option to export reports somewhere other than STDOUT
  - [ ] Prettier reports
  - [ ] Test
+   - [x] Integration
+   - [ ] Unit
  - [ ] Examples
  - [ ] Write out usage here
  - [ ] Linting and Clean Up
