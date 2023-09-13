@@ -2,9 +2,7 @@ from typing import List, Optional
 
 import toml
 
-from UniPositions.utils.env_utils import get_env_variable
-from UniPositions.config.datatypes import ChainResources, PositionSpecs, PositionSpecsSchema
-
+from uniswap_breakouts.config.datatypes import ChainResources, PositionSpecs, PositionSpecsSchema
 
 chain_resource_config_path: Optional[str] = None
 chain_resources: Optional[List[ChainResources]] = None

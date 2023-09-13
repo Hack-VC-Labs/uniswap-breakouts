@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Optional, Tuple
 
-from UniPositions.uniswap.uniswap_utils import PoolToken, get_pool_token_info
-from UniPositions.utils.web3_utils import contract_call_at_block
+from uniswap_breakouts.uniswap.uniswap_utils import PoolToken, get_pool_token_info
+from uniswap_breakouts.utils.web3_utils import contract_call_at_block
 
 
 @dataclass_json

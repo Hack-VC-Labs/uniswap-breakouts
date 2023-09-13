@@ -3,12 +3,13 @@ requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "uni_positions"
+name = "uniswap-breakouts"
 requires-python = ">=3.10"
 version = "0.0.1"
 dependencies = [
     "python-dotenv~=1.0.0",
     "requests~=2.30.0",
     "web3~=6.3.0",
-    "dataclasses-json~=0.5.7"
+    "dataclasses-json~=0.5.7",
+    "toml==0.10.2"
 ]

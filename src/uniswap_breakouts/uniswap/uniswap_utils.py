@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from decimal import Decimal
 
-from UniPositions.constants.abis import TOKEN_CONTRACT_ABI
-from UniPositions.utils.web3_utils import contract_call_at_block
+from uniswap_breakouts.constants.abis import TOKEN_CONTRACT_ABI
+from uniswap_breakouts.utils.web3_utils import contract_call_at_block
 
 
 @dataclass_json

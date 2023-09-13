@@ -2,9 +2,9 @@ from argparse import ArgumentParser
 import logging
 from typing import Optional
 
-from UniPositions.config.load import set_chain_resource_config_path, set_position_spec_config_path
-from UniPositions.report.report_runner import create_position_reports
-from UniPositions.utils.env_utils import get_env_variable
+from uniswap_breakouts.config.load import set_chain_resource_config_path, set_position_spec_config_path
+from uniswap_breakouts.report.report_runner import create_position_reports
+from uniswap_breakouts.utils.env_utils import get_env_variable
 
 
 def main(verbose: int, chain_config: Optional[str] = None, position_config: Optional[str] = None) -> None:

@@ -2,8 +2,8 @@ import json
 import logging
 from typing import List, Tuple
 
-from UniPositions.config.load import get_position_specs
-from UniPositions.uniswap import v2, v3
+from uniswap_breakouts.config.load import get_position_specs
+from uniswap_breakouts.uniswap import v2, v3
 
 logger = logging.getLogger(__name__)
 

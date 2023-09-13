@@ -5,8 +5,8 @@ import urllib.parse
 import requests
 from web3 import Web3
 
-from UniPositions.utils.env_utils import get_env_variable
-from UniPositions.config.load import get_chain_resource
+from uniswap_breakouts.utils.env_utils import get_env_variable
+from uniswap_breakouts.config.load import get_chain_resource
 
 
 CACHING = False
