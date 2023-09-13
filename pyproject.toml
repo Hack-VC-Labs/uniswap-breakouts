@@ -23,7 +23,7 @@ linting = [
     "types-requests~=2.31.0.1"
 ]
 
-[tool.setuptools.package.find]
+[tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
