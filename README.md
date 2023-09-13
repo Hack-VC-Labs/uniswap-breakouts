@@ -8,4 +8,4 @@ TODO:
  - Test
  - Examples
  - Write out useage here
- - Clean Up
+ - Linting and Clean Up
