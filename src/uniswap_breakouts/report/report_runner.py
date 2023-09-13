@@ -1,9 +1,12 @@
+from decimal import Decimal
 import json
 import logging
 from typing import Dict, List, Optional
 
-from uniswap_breakouts.config.load import get_position_specs
-from uniswap_breakouts.uniswap import v2, v3
+import pandas as pd
+
+from uniswap_breakouts.config.load import get_position_specs, get_chain_resource
+from uniswap_breakouts.uniswap import v2, v3, v3_ticks
 
 logger = logging.getLogger(__name__)
 
@@ -48,3 +51,31 @@ def create_position_reports(out_file: Optional[str]):
             json.dump(report_dict, report_output_file, indent=4, default=str)
     else:
         print(json.dumps(report_dict, indent=2, default=str))
+
+
+def create_liquidity_df(
+    *,
+    chain: str,
+    pool_address: str,
+    depth: Decimal,
+    tick_lens_address: Optional[str] = None,
+    block_no: Optional[int] = None
+) -> pd.DataFrame:
+    if tick_lens_address is None:
+        chain_resource = get_chain_resource(chain)
+        tick_lens_address = chain_resource.tick_lens_address
+
+        if tick_lens_address is None:
+            logger.error("No tick lens address for pool: %s - %s", chain, pool_address)
+
+    logger.debug("generating liquidity snapshot for pool: %s - %s", chain, pool_address)
+    liquidity_snapshot = v3_ticks.get_tick_liquidity_info_for_pool(chain,
+                                                                   pool_address,
+                                                                   tick_lens_address,
+                                                                   depth,
+                                                                   block_no)
+
+    logger.debug("generating tick liquidity dataframe for pool: %s - %s", chain, pool_address)
+    liquidity_df = v3_ticks.make_tick_liquidity_df(liquidity_snapshot, depth)
+
+    return liquidity_df

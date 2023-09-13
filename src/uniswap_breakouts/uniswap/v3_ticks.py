@@ -186,17 +186,17 @@ def make_tick_liquidity_df(snapshot: V3TickLiquiditySnapshot, depth: Decimal) ->
     # to adjust the shape of the liquidity to the correct value
     tick_df['liquidity_shape'] = tick_df['liquidity_net'].cumsum()
     active_tick_lower = (snapshot.active_tick // snapshot.tick_spacing) * snapshot.tick_spacing
-    unadjusted_active_liquidity = tick_df.loc[tick_df['tick'] == active_tick_lower]['liquidity_edge'].values[0]
+    unadjusted_active_liquidity = tick_df.loc[tick_df['tick'] == active_tick_lower]['liquidity_shape'].values[0]
     liquidity_adjustment = snapshot.active_liquidity - unadjusted_active_liquidity
-    tick_df['liquidity'] = tick_df['liquidity_edge'] + liquidity_adjustment
+    tick_df['liquidity'] = tick_df['liquidity_shape'] + liquidity_adjustment
 
     # set up for underlying calculations
     decimal_adjustment = Decimal(10) ** Decimal(snapshot.token0.decimals - snapshot.token1.decimals)
     tick_df['tick_upper'] = tick_df['tick'] + snapshot.tick_spacing
     tick_df['virtual_ratio'] = tick_df['tick'].apply(tick_to_price)
     tick_df['virtual_ratio_upper'] = tick_df['tick_upper'].apply(tick_to_price)
-    tick_df['ratio'] = tick_df['ratio'] * decimal_adjustment
-    tick_df['ratio_upper'] = tick_df['ratio_upper'] * decimal_adjustment
+    tick_df['ratio'] = tick_df['virtual_ratio'] * decimal_adjustment
+    tick_df['ratio_upper'] = tick_df['virtual_ratio_upper'] * decimal_adjustment
 
     #
     tick_df[['token0_underlying_virtual', 'token1_underlying_virtual']] = \

@@ -12,6 +12,7 @@ class ChainResources:
     scanner_base_url: str
     scanner_api_key: str
     rpc_url: str
+    tick_lens_address: Optional[str] = None
 
 
 @dataclass(frozen=True)
