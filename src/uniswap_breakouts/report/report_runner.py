@@ -14,14 +14,14 @@ def create_position_reports():
     v2_report: List[Tuple[dict, dict]] = []
     for v2_spec in position_specs.v2_positions:
         if v2_spec.wallet_address is not None:
-            logger.debug(f'generating v2 position snapshot from wallet: {v2_spec.to_dict()}')
+            logger.info(f'generating v2 position snapshot from wallet: {v2_spec.to_dict()}')
             position_snapshot = v2.get_underlying_balances_from_address(v2_spec.chain,
                                                                         v2_spec.pool_address,
                                                                         v2_spec.wallet_address,
                                                                         v2_spec.block_no)
         else:
             assert v2_spec.lp_balance is not None
-            logger.debug(f'generating v2 position snapshot from lp balance: {v2_spec.to_dict()}')
+            logger.info(f'generating v2 position snapshot from lp balance: {v2_spec.to_dict()}')
             position_snapshot = v2.get_underlying_balances_from_lp_balance(v2_spec.chain,
                                                                            v2_spec.pool_address,
                                                                            v2_spec.lp_balance,
@@ -31,7 +31,7 @@ def create_position_reports():
 
     v3_report: List[Tuple[dict, dict]] = []
     for v3_spec in position_specs.v3_positions:
-        logger.debug(f'generating v3 snapshot: {v3_spec}')
+        logger.info(f'generating v3 snapshot: {v3_spec}')
         position_snapshot = v3.get_underlying_balances(v3_spec.chain,
                                                        v3_spec.pool_address,
                                                        v3_spec.nft_address,
