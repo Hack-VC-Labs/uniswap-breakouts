@@ -43,7 +43,7 @@ def tick_to_price(tick_index: int) -> Decimal:
 
 
 def price_outside_below(tick_lower: Decimal, tick_upper: Decimal, liquidity: Decimal) -> Decimal:
-    return liquidity * (tick_upper.sqrt() - tick_lower.sqrt()) / (tick_lower.sqrt() * tick_lower.sqrt())
+    return liquidity * (tick_upper.sqrt() - tick_lower.sqrt()) / (tick_lower.sqrt() * tick_upper.sqrt())
 
 
 def price_outside_above(tick_lower: Decimal, tick_upper: Decimal, liquidity: Decimal) -> Decimal:

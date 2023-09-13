@@ -1,0 +1,5 @@
+export CHAIN_CONFIG_PATH="<path-to-chain-resource-config>"
+export POSITION_CONFIG_PATH="<path-to-position-config>"
+
+export CACHING="<TRUE or FALSE>"
+export CACHE_PATH="<path-to-abi-cache-file>"

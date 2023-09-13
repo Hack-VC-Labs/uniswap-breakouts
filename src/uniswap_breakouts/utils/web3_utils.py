@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 CACHING = False
 try:
-    caching_env_var = get_env_variable("CASHING")
+    caching_env_var = get_env_variable("CACHING")
     if caching_env_var == 'TRUE':
         logger.info("ABI Caching as been Enabled")
         CACHING = True
