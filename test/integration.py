@@ -26,12 +26,15 @@ def run_and_return_std_out(args: Optional[List[str]] = None, env_vars: Optional[
 
 class WethUsdcPoolsCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.position_config_path = str(Path(__file__).parent / "test_position_configs/weth_usdc_positions.json")
+        self.position_config_path = str(
+            Path(__file__).parent / "test_position_configs/weth_usdc_positions.json"
+        )
         self.chain_config_path = str(Path(__file__).parent / "test_chain_resource_configs/default.toml")
-        self.expected_output_path = str(Path(__file__).parent / "test_expected_outputs/weth_usdc_expected.json")
+        self.expected_output_path = str(
+            Path(__file__).parent / "test_expected_outputs/weth_usdc_expected.json"
+        )
         self.out_file_path = str(Path(__file__).parent / "test_outputs/weth_usdc_out.json")
         self.caching_path = str(Path(__file__).parent / "test_caching_dir/weth_usdc_abi_cache.pkl")
-
 
         if os.path.exists(self.out_file_path):
             os.remove(self.out_file_path)
@@ -45,7 +48,7 @@ class WethUsdcPoolsCase(unittest.TestCase):
     def test_set_configs_in_env(self):
         env_vars = {
             "CHAIN_CONFIG_PATH": self.chain_config_path,
-            "POSITION_CONFIG_PATH": self.position_config_path
+            "POSITION_CONFIG_PATH": self.position_config_path,
         }
         raw_output = run_and_return_std_out(env_vars=env_vars)
         actual_output = json.loads(raw_output)
@@ -62,7 +65,7 @@ class WethUsdcPoolsCase(unittest.TestCase):
     def test_output_to_file(self):
         env_vars = {
             "CHAIN_CONFIG_PATH": self.chain_config_path,
-            "POSITION_CONFIG_PATH": self.position_config_path
+            "POSITION_CONFIG_PATH": self.position_config_path,
         }
         cmd_line_params = ['-o', self.out_file_path]
         raw_output = run_and_return_std_out(args=cmd_line_params, env_vars=env_vars)
@@ -78,7 +81,7 @@ class WethUsdcPoolsCase(unittest.TestCase):
             "CHAIN_CONFIG_PATH": self.chain_config_path,
             "POSITION_CONFIG_PATH": self.position_config_path,
             "CACHING": "TRUE",
-            "CACHE_PATH": self.caching_path
+            "CACHE_PATH": self.caching_path,
         }
         raw_output = run_and_return_std_out(env_vars=env_vars)
         actual_output = json.loads(raw_output)

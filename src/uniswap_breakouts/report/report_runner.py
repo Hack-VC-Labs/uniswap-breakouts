@@ -59,7 +59,7 @@ def create_liquidity_df(
     pool_address: str,
     depth: Decimal,
     tick_lens_address: Optional[str] = None,
-    block_no: Optional[int] = None
+    block_no: Optional[int] = None,
 ) -> pd.DataFrame:
     if tick_lens_address is None:
         chain_resource = get_chain_resource(chain)
@@ -67,13 +67,12 @@ def create_liquidity_df(
 
         if tick_lens_address is None:
             logger.error("No tick lens address for pool: %s - %s", chain, pool_address)
+            raise ValueError(f"Missing Tick Lens address for chain {chain}")
 
     logger.debug("generating liquidity snapshot for pool: %s - %s", chain, pool_address)
-    liquidity_snapshot = v3_ticks.get_tick_liquidity_info_for_pool(chain,
-                                                                   pool_address,
-                                                                   tick_lens_address,
-                                                                   depth,
-                                                                   block_no)
+    liquidity_snapshot = v3_ticks.get_tick_liquidity_info_for_pool(
+        chain, pool_address, tick_lens_address, depth, block_no
+    )
 
     logger.debug("generating tick liquidity dataframe for pool: %s - %s", chain, pool_address)
     liquidity_df = v3_ticks.make_tick_liquidity_df(liquidity_snapshot, depth)

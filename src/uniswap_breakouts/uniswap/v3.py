@@ -35,7 +35,7 @@ def pool_position_string(chain: str, pool_address: str, nft_id: int, block_no: O
 
 
 def q64_96_to_decimal(q64_96_number: int) -> Decimal:
-    return Decimal(q64_96_number) / (Decimal(2)**Decimal(96))
+    return Decimal(q64_96_number) / (Decimal(2) ** Decimal(96))
 
 
 def tick_to_price(tick_index: int) -> Decimal:
@@ -60,7 +60,9 @@ def price_inbetween(
     return token0_position_virtual, token1_position_virtual
 
 
-def get_virtual_underlyings_from_range(ratio: Decimal, lower_ratio: Decimal, upper_ratio: Decimal, liquidity: int) -> Tuple[Decimal, Decimal]:
+def get_virtual_underlyings_from_range(
+    ratio: Decimal, lower_ratio: Decimal, upper_ratio: Decimal, liquidity: int
+) -> Tuple[Decimal, Decimal]:
     if ratio > upper_ratio:
         token0_position_virtual = Decimal(0)
         token1_position_virtual = price_outside_above(lower_ratio, upper_ratio, Decimal(liquidity))
@@ -74,6 +76,19 @@ def get_virtual_underlyings_from_range(ratio: Decimal, lower_ratio: Decimal, upp
 
     return token0_position_virtual, token1_position_virtual
 
+
+def get_price_info_for_pool(chain: str, pool_address: str, block_no: Optional[int]) -> Tuple:
+    pool_info_result = contract_call_at_block(
+        chain=chain,
+        interface_address=pool_address,
+        implementation_address=pool_address,
+        fn_name='slot0',
+        fn_args=[],
+        block_no=block_no,
+        abi=V3_POOL_CONTRACT_ABI,
+    )
+
+    return pool_info_result
 
 
 # pylint: disable=too-many-arguments,too-many-locals
@@ -95,15 +110,7 @@ def get_underlying_balances(
     decimal_adjustment = Decimal(10 ** (token0.decimals - token1.decimals))
 
     logger.debug("getting pool price for %s", position_string())
-    pool_info_result = contract_call_at_block(
-        chain=chain,
-        interface_address=pool_address,
-        implementation_address=pool_address,
-        fn_name='slot0',
-        fn_args=[],
-        block_no=block_no,
-        abi=V3_POOL_CONTRACT_ABI,
-    )
+    pool_info_result = get_price_info_for_pool(chain, pool_address, block_no)
 
     sqrt_price_x96 = pool_info_result[0]
     price = q64_96_to_decimal(sqrt_price_x96) ** Decimal(2)
@@ -132,10 +139,9 @@ def get_underlying_balances(
         position_string(),
     )
 
-    token0_position_virtual, token1_position_virtual = get_virtual_underlyings_from_range(price,
-                                                                                          lower_tick_price,
-                                                                                          upper_tick_price,
-                                                                                          liquidity)
+    token0_position_virtual, token1_position_virtual = get_virtual_underlyings_from_range(
+        price, lower_tick_price, upper_tick_price, liquidity
+    )
 
     token0_position = token0_position_virtual / (Decimal(10) ** Decimal(token0.decimals))
     token1_position = token1_position_virtual / (Decimal(10) ** Decimal(token1.decimals))
