@@ -28,7 +28,7 @@ class V3LiquiditySnapshot(DataClassJsonMixin):
     num_token1_underlying: Decimal
 
 
-def pool_string(chain: str, pool_address: str, nft_id: int, block_no: Optional[int]) -> str:
+def pool_position_string(chain: str, pool_address: str, nft_id: int, block_no: Optional[int]) -> str:
     return f"{chain} - {pool_address} id: {nft_id}" + (
         f" at block {block_no}" if block_no is not None else ""
     )
@@ -60,6 +60,22 @@ def price_inbetween(
     return token0_position_virtual, token1_position_virtual
 
 
+def get_virtual_underlyings_from_range(ratio: Decimal, lower_ratio: Decimal, upper_ratio: Decimal, liquidity: int) -> Tuple[Decimal, Decimal]:
+    if ratio > upper_ratio:
+        token0_position_virtual = Decimal(0)
+        token1_position_virtual = price_outside_above(lower_ratio, upper_ratio, Decimal(liquidity))
+    elif ratio < lower_ratio:
+        token0_position_virtual = price_outside_below(lower_ratio, upper_ratio, Decimal(liquidity))
+        token1_position_virtual = Decimal(0)
+    else:
+        token0_position_virtual, token1_position_virtual = price_inbetween(
+            ratio, lower_ratio, upper_ratio, Decimal(liquidity)
+        )
+
+    return token0_position_virtual, token1_position_virtual
+
+
+
 # pylint: disable=too-many-arguments,too-many-locals
 # this is a complex calculation, but I think it's better to keep it all in one function for understanding
 def get_underlying_balances(
@@ -71,7 +87,7 @@ def get_underlying_balances(
     block_no: Optional[int] = None,
 ) -> V3LiquiditySnapshot:
     def position_string() -> str:
-        return pool_string(chain, pool_address, nft_id, block_no)
+        return pool_position_string(chain, pool_address, nft_id, block_no)
 
     logger.debug("requesting underlying LP balances for V3 position %s", position_string())
     token0 = get_pool_token_info(chain, pool_address, 0, V3_POOL_CONTRACT_ABI)
@@ -116,19 +132,10 @@ def get_underlying_balances(
         position_string(),
     )
 
-    if price > upper_tick_price:
-        logger.debug("calculating underlying for price above upper tick for %s", position_string())
-        token0_position_virtual = Decimal(0)
-        token1_position_virtual = price_outside_above(lower_tick_price, upper_tick_price, Decimal(liquidity))
-    elif price < lower_tick_price:
-        logger.debug("calculating underlying for price below lower tick for %s", position_string())
-        token0_position_virtual = price_outside_below(lower_tick_price, upper_tick_price, Decimal(liquidity))
-        token1_position_virtual = Decimal(0)
-    else:
-        logger.debug("calculating underlying for price between ticks for %s", position_string())
-        token0_position_virtual, token1_position_virtual = price_inbetween(
-            price, lower_tick_price, upper_tick_price, Decimal(liquidity)
-        )
+    token0_position_virtual, token1_position_virtual = get_virtual_underlyings_from_range(price,
+                                                                                          lower_tick_price,
+                                                                                          upper_tick_price,
+                                                                                          liquidity)
 
     token0_position = token0_position_virtual / Decimal(10**token0.decimals)
     token1_position = token1_position_virtual / Decimal(10**token1.decimals)
