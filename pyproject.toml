@@ -23,6 +23,12 @@ linting = [
     "types-requests~=2.31.0.1"
 ]
 
+[tool.setuptools.package.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+uniswap_breakouts = ["constants/*.json"]
+
 
 [tool.black]
 line-length = 110
