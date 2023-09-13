@@ -7,7 +7,6 @@ import sys
 from typing import Dict, Optional, List
 import unittest
 
-#MAIN_MODULE = Path(__file__).parent / "-m "
 PACKAGE_RUN = ["-m", "uniswap_breakouts"]
 
 

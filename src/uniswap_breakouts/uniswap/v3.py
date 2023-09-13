@@ -35,7 +35,7 @@ def pool_position_string(chain: str, pool_address: str, nft_id: int, block_no: O
 
 
 def q64_96_to_decimal(q64_96_number: int) -> Decimal:
-    return Decimal(q64_96_number) / Decimal(2**96)
+    return Decimal(q64_96_number) / (Decimal(2)**Decimal(96))
 
 
 def tick_to_price(tick_index: int) -> Decimal:
@@ -137,8 +137,8 @@ def get_underlying_balances(
                                                                                           upper_tick_price,
                                                                                           liquidity)
 
-    token0_position = token0_position_virtual / Decimal(10**token0.decimals)
-    token1_position = token1_position_virtual / Decimal(10**token1.decimals)
+    token0_position = token0_position_virtual / (Decimal(10) ** Decimal(token0.decimals))
+    token1_position = token1_position_virtual / (Decimal(10) ** Decimal(token1.decimals))
     logger.info(
         "underlying positions of token0 - %s and token1 - %s for %s",
         token0_position,
