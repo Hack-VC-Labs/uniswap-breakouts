@@ -27,7 +27,7 @@ linting = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-uniswap_breakouts = ["constants/*.json"]
+"uniswap_breakouts.constants" = ["*.json"]
 
 
 [tool.black]
