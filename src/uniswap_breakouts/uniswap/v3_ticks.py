@@ -1,3 +1,4 @@
+import typing
 from dataclasses import dataclass
 from decimal import Decimal
 import logging
@@ -168,6 +169,7 @@ def get_tick_liquidity_info_for_pool(
     )
 
 
+@typing.no_type_check  # mypy and pandas/Decimal is weird. The function works and its just for users
 def make_tick_liquidity_df(snapshot: V3TickLiquiditySnapshot, depth: Decimal) -> pd.DataFrame:
     # reverse order of ticks since we want to cumulatively sum in increasing order
     logger.debug("calculating liquidity metrics")
@@ -196,7 +198,7 @@ def make_tick_liquidity_df(snapshot: V3TickLiquiditySnapshot, depth: Decimal) ->
     tick_df['ratio'] = tick_df['virtual_ratio'] * decimal_adjustment
     tick_df['ratio_upper'] = tick_df['virtual_ratio_upper'] * decimal_adjustment
 
-    #
+    # Apply the underlying token range function from the v3 module on each tick
     tick_df[['token0_underlying_virtual', 'token1_underlying_virtual']] = tick_df.apply(
         lambda row: pd.Series(
             get_virtual_underlyings_from_range(

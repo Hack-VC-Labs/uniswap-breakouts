@@ -101,12 +101,23 @@ def get_underlying_balances(
     nft_id: int,
     block_no: Optional[int] = None,
 ) -> V3LiquiditySnapshot:
+    """
+    Get the underlying token balances for a single Uniswap v3 position
+
+    see https://atiselsts.github.io/pdfs/uniswap-v3-liquidity-math.pdf.
+    We use the contract calls to get the necessary inputs into the above formulas for
+    calculating the underlying positions of the liquidity range
+    """
+
     def position_string() -> str:
         return pool_position_string(chain, pool_address, nft_id, block_no)
 
     logger.debug("requesting underlying LP balances for V3 position %s", position_string())
     token0 = get_pool_token_info(chain, pool_address, 0, V3_POOL_CONTRACT_ABI)
     token1 = get_pool_token_info(chain, pool_address, 1, V3_POOL_CONTRACT_ABI)
+
+    # the ratio that Uniswap records is a virtual ratio. We will need to adjust by the
+    # relative decimals of the tokens to get the actual balances later
     decimal_adjustment = Decimal(10 ** (token0.decimals - token1.decimals))
 
     logger.debug("getting pool price for %s", position_string())

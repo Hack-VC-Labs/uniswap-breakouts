@@ -30,6 +30,13 @@ def pool_string(chain: str, pool_address: str, block_no: Optional[int]) -> str:
 def get_underlying_balances_from_address(
     chain: str, pool_address: str, wallet_address: str, block_no: Optional[int] = None
 ) -> V2LiquiditySnapshot:
+    """
+    Get underlying LP tokens for an address
+
+    This convenience function just gets the total underlying balance with the `balanceOf()` endpoint
+    and then feeds it into the function that does the math. We separate these because we often
+    have to get the balance from a different source (i.e. staking contract)
+    """
     logger.debug(
         "requesting underlying LP balances for wallet %s in V2 pool %s",
         wallet_address,
@@ -57,6 +64,15 @@ def get_underlying_balances_from_address(
 def get_underlying_balances_from_lp_balance(
     chain: str, pool_address: str, wallet_lp_balance: Decimal, block_no: Optional[int]
 ) -> V2LiquiditySnapshot:
+    """
+    Get the underlying balances for a V2 LP position.
+
+    1. Find the total LP token supply - `totalSupply()` of the pool contract
+    2. Use these results to find your % share of the pool liquidity
+    3. Find the total underlying balances of the pool - `balances()` on the pool contract
+    4. Apply your LP share to the total underlying balances to get your claim on the underlying
+    """
+
     def pool_str() -> str:
         return pool_string(chain, pool_address, block_no)
 
