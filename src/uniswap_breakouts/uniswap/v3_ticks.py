@@ -173,7 +173,7 @@ def get_tick_liquidity_info_for_pool(
 def make_tick_liquidity_df(snapshot: V3TickLiquiditySnapshot, depth: Decimal) -> pd.DataFrame:
     # reverse order of ticks since we want to cumulatively sum in increasing order
     logger.debug("calculating liquidity metrics")
-    tick_df = pd.DataFrame(reversed([vars(tick) for tick in snapshot.ticks]))
+    tick_df = pd.DataFrame(reversed([vars(tick) for tick in snapshot.ticks]))  # type: ignore
 
     # fill in missing ticks so the dataframe is not sparse
     all_ticks = pd.DataFrame(
