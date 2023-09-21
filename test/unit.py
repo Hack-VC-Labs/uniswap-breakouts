@@ -46,16 +46,15 @@ class V3TicksUnitCase(unittest.TestCase):
         self.assertEqual(liquidity_snapshot.virtual_ratio, Decimal('157787770847.5234530587784276'))
         self.assertEqual(liquidity_snapshot.active_tick, 257858)
         self.assertEqual(liquidity_snapshot.active_liquidity, 2053104318434531812)
-        self.assertEqual(
-            liquidity_snapshot.token0,
-            PoolToken(
-                index=0, address='0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol='WBTC', decimals=8
-            ),
-        )
-        self.assertEqual(
-            liquidity_snapshot.token1,
-            PoolToken(
-                index=1, address='0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol='WETH', decimals=18
-            ),
-        )
         self.assertEqual(liquidity_snapshot.tick_spacing, 60)
+
+        self.assertEqual(liquidity_snapshot.token0.index, 0)
+        self.assertEqual(liquidity_snapshot.token0.address, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599')
+        self.assertEqual(liquidity_snapshot.token0.symbol, 'WBTC')
+        self.assertEqual(liquidity_snapshot.token0.decimals, 8)
+
+        self.assertEqual(liquidity_snapshot.token1.index, 1)
+        self.assertEqual(liquidity_snapshot.token1.address, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
+        self.assertEqual(liquidity_snapshot.token1.symbol, 'WETH')
+        self.assertEqual(liquidity_snapshot.token1.decimals, 18)
+
