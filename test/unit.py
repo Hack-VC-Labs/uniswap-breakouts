@@ -6,7 +6,6 @@ import unittest
 import pandas as pd
 
 from uniswap_breakouts.uniswap import v3_ticks
-from uniswap_breakouts.uniswap.uniswap_utils import PoolToken
 
 
 class V3TicksUnitCase(unittest.TestCase):
