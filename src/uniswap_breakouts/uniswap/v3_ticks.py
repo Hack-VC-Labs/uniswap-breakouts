@@ -198,7 +198,8 @@ def make_tick_liquidity_df(snapshot: V3TickLiquiditySnapshot, depth: Decimal) ->
     tick_df['ratio'] = tick_df['virtual_ratio'] * decimal_adjustment
     tick_df['ratio_upper'] = tick_df['virtual_ratio_upper'] * decimal_adjustment
 
-    # Apply the underlying token range function from the v3 module on each tick
+    # Apply the underlying token range function from the v3 module on each tick. We basically treat each tick
+    # treat each tick as its own range position
     tick_df[['token0_underlying_virtual', 'token1_underlying_virtual']] = tick_df.apply(
         lambda row: pd.Series(
             get_virtual_underlyings_from_range(
