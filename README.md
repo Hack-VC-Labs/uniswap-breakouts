@@ -1,5 +1,5 @@
 # uniswap-breakouts
-Library and utility to help break out underlying token amounts from uniswap positions and generate pool liquidity profiles at arbitrary block hights.
+Library and utility to help break out underlying token amounts from uniswap positions and generate pool liquidity profiles at arbitrary block heights.
 
 ### Usage
 
