@@ -7,22 +7,22 @@ name = "uniswap-breakouts"
 requires-python = ">=3.10"
 version = "0.0.1"
 dependencies = [
-    "python-dotenv~=1.0.0",
-    "requests~=2.30.0",
-    "web3~=6.3.0",
-    "dataclasses-json~=0.5.7",
-    "pandas~=2.1",
+    "python-dotenv>=1.0.0",
+    "requests>=2.30.0",
+    "web3>=6.15.0",
+    "dataclasses-json>=0.5.7",
+    "pandas>=2.1",
     "toml==0.10.2"
 ]
 
 [project.optional-dependencies]
 linting = [
-    "black~=23.3",
-    "pylint~=2.17",
-    "mypy~=1.3.0",
-    "types-toml~=0.10.8.6",
-    "types-requests~=2.31.0.1",
-    "pandas-stubs~=2.0.3.230814"
+    "black>=23.3",
+    "pylint>=2.17",
+    "mypy>=1.3.0",
+    "types-toml>=0.10.8.6",
+    "types-requests>=2.31.0.1",
+    "pandas-stubs>=2.0.3.230814"
 ]
 
 [tool.setuptools.packages.find]
