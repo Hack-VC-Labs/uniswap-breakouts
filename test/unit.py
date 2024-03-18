@@ -56,4 +56,3 @@ class V3TicksUnitCase(unittest.TestCase):
         self.assertEqual(liquidity_snapshot.token1.address, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
         self.assertEqual(liquidity_snapshot.token1.symbol, 'WETH')
         self.assertEqual(liquidity_snapshot.token1.decimals, 18)
-
