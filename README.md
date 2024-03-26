@@ -26,14 +26,14 @@ options:
   -v, --verbose
 ```
 
-Tests and Contribution:
+### Tests and Contribution
 
 If you would like to contribute, please install the linting dependencies and make sure the black, pylint and mypy checks pass.
 
 To run tests, put your chain info config in the path `test/test_chain_resource_configs/default.toml` and run test with the unittest module
 
 
-TODO:
+### TODO
 
  - [x] More Logging
  - [x] Option to export reports somewhere other than STDOUT
